@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Note.Application.Common.Behaviours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Note.Application
 			services.AddAutoMapper(Assembly.GetExecutingAssembly());
 			services.AddMediatR(ctg =>
 			{
+				ctg.AddBehavior(typeof(IPipelineBehavior<,> ), typeof(ValidationBehaviour<,>));
 				ctg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
 			});
 			return services;
