@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Note.Domain.Entity.Tag;
 
 namespace Note.Interface.Data
 {
@@ -13,7 +14,9 @@ namespace Note.Interface.Data
 		public DbSet<Tag> Tags { get; set; }
 		public DbSet<Reminder> Reminders { get; set; }
 		public DbSet<Domain.Entity.Note> Notes { get; set; }
+		
 		public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
-
+		
 	}
 }
+

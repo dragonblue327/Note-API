@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Note.Domain.Entity.Tag;
 
 namespace Note.Domain.Entity
 {
@@ -11,7 +12,7 @@ namespace Note.Domain.Entity
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Text { get; set; }
-		public List<Tag> Tags { get; set; }
+		public List<Tag>? Tags { get; set; }
 	}
 
 }

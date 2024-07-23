@@ -22,6 +22,7 @@ public static class ConfigureServices
 		throw new InvalidOperationException("Connection String 'ConStr' Not Found")));
 
 		services.AddTransient<INoteRepository, NoteRepository>();
+		services.AddTransient<ITagRepository, TagRepository>();
 
 		return services;
 	}

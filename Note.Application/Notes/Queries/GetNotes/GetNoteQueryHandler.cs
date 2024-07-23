@@ -23,10 +23,6 @@ namespace Note.Application.Notes.Queries.GetNotes
 		public async Task<List<NoteVm>> Handle(GetNoteQuery request, CancellationToken cancellationToken)
 		{
 			var notes = await _noteRepository.GetAllNotesAsync();
-			//var noteList = notes.Select(x => new NoteVm { Id = x.Id,
-			//	Name = x.Name,
-			//	Text = x.Text }).ToList();
-
 			var noteList = _mapper.Map<List<NoteVm>>(notes);
 			return noteList;
 		}

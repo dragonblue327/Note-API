@@ -43,7 +43,7 @@ namespace Note.Interface.Repository
 		public async Task<int> UpdateAsync(int id, Domain.Entity.Note note)
 		{
 			return await _context.Notes.Where(a => a.Id == id).ExecuteUpdateAsync(setters => setters
-			.SetProperty(a => a.Name, note.Name)
+			.SetProperty(a => a.Title, note.Title)
 			.SetProperty(a => a.Text, note.Text)
 			);
 		}

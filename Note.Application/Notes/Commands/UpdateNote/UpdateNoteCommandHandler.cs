@@ -23,8 +23,8 @@ namespace Note.Application.Notes.Commands.UpdateNote
 			var updateNoteEntity = new Domain.Entity.Note()
 			{
 				Id = request.Id,
-				Name = request.Name,
-				Text = request.Text,
+				Title = request.Title,
+				Text = request.Text
 			};
 			return await _noteRepository.UpdateAsync(request.Id, updateNoteEntity);
 	

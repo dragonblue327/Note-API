@@ -8,7 +8,7 @@ namespace Note.Domain.Repository
 {
 	public interface ITagRepository
 	{
-		Task<List<Tag>> GetAllNotesAsync();
+		Task<List<Tag>> GetAllTagsAsync();
 		Task<Tag> GetByIdAsync(int id);
 		Task<Tag> CreateAsync(Tag tag);
 		Task<int> UpdateAsync(int id, Tag tag);

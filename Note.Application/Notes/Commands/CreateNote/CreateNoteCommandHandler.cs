@@ -24,8 +24,9 @@ namespace Note.Application.Notes.Commands.CreateNote
 		{
 			var noteEnity = new Domain.Entity.Note()
 			{
-				Name = request.Name,
-				Text = request.Text
+				Title = request.Title,
+				Text = request.Text,
+				Tags = request.Tags??null,
 			};
 			var result = await _noteRepository.CreateAsync(noteEnity);
 			return _mapper.Map<NoteVm>(result);
