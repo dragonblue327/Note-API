@@ -15,3 +15,6 @@ C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interfa
 C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\refint\Note.Interface.dll
 C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.pdb
 C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\ref\Note.Interface.dll
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Interface.runtimeconfig.json
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.sourcelink.json
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.genruntimeconfig.cache

@@ -11,8 +11,8 @@ namespace Note.Domain.Repository
 		Task<List<Entity.Note>> GetAllNotesAsync();
 		Task<Entity.Note> GetByIdAsync(int id);
 		Task<Entity.Note> CreateAsync(Entity.Note note);
-		Task<Entity.Note> UpdateAsync(int id, Entity.Note note);
-		Task<Entity.Note> DeleteAsync(int id);
+		Task<int> UpdateAsync(int id, Entity.Note note);
+		Task<int> DeleteAsync(int id);
 
 	}
 }

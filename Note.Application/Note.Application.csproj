@@ -9,10 +9,6 @@
   <ItemGroup>
     <Folder Include="Common\Behaviours\" />
     <Folder Include="Common\Exceptions\" />
-    <Folder Include="Notes\Commands\CreateNote\" />
-    <Folder Include="Notes\Commands\DeleteNote\" />
-    <Folder Include="Notes\Commands\UpdateNote\" />
-    <Folder Include="Notes\Queries\GetNoteById\" />
   </ItemGroup>
 
   <ItemGroup>

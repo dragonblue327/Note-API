@@ -10,3 +10,4 @@ C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.dll
 C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\refint\Note.Domain.dll
 C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.pdb
 C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\ref\Note.Domain.dll
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.sourcelink.json

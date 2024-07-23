@@ -13,3 +13,4 @@ C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Appli
 C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\refint\Note.Application.dll
 C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.pdb
 C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\ref\Note.Application.dll
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.sourcelink.json
