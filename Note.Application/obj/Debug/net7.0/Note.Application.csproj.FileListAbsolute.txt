@@ -1,0 +1,15 @@
+C:\Users\drago\source\repos\NewTest\Note.Application\bin\Debug\net7.0\Note.Application.deps.json
+C:\Users\drago\source\repos\NewTest\Note.Application\bin\Debug\net7.0\Note.Application.dll
+C:\Users\drago\source\repos\NewTest\Note.Application\bin\Debug\net7.0\Note.Application.pdb
+C:\Users\drago\source\repos\NewTest\Note.Application\bin\Debug\net7.0\Note.Domain.dll
+C:\Users\drago\source\repos\NewTest\Note.Application\bin\Debug\net7.0\Note.Domain.pdb
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.csproj.AssemblyReference.cache
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.AssemblyInfoInputs.cache
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.AssemblyInfo.cs
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.csproj.CoreCompileInputs.cache
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.App.3AE7437E.Up2Date
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.dll
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\refint\Note.Application.dll
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\Note.Application.pdb
+C:\Users\drago\source\repos\NewTest\Note.Application\obj\Debug\net7.0\ref\Note.Application.dll

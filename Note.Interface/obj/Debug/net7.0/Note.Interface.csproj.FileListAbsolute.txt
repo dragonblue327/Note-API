@@ -1,0 +1,17 @@
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Interface.deps.json
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Interface.dll
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Interface.pdb
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Application.dll
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Domain.dll
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Application.pdb
+C:\Users\drago\source\repos\NewTest\Note.Interface\bin\Debug\net7.0\Note.Domain.pdb
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.csproj.AssemblyReference.cache
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.AssemblyInfoInputs.cache
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.AssemblyInfo.cs
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.csproj.CoreCompileInputs.cache
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Int.AB8240BD.Up2Date
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.dll
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\refint\Note.Interface.dll
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\Note.Interface.pdb
+C:\Users\drago\source\repos\NewTest\Note.Interface\obj\Debug\net7.0\ref\Note.Interface.dll

@@ -1,0 +1,12 @@
+C:\Users\drago\source\repos\NewTest\Note.Domain\bin\Debug\net7.0\Note.Domain.deps.json
+C:\Users\drago\source\repos\NewTest\Note.Domain\bin\Debug\net7.0\Note.Domain.dll
+C:\Users\drago\source\repos\NewTest\Note.Domain\bin\Debug\net7.0\Note.Domain.pdb
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.csproj.AssemblyReference.cache
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.AssemblyInfoInputs.cache
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.AssemblyInfo.cs
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.csproj.CoreCompileInputs.cache
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.dll
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\refint\Note.Domain.dll
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\Note.Domain.pdb
+C:\Users\drago\source\repos\NewTest\Note.Domain\obj\Debug\net7.0\ref\Note.Domain.dll
