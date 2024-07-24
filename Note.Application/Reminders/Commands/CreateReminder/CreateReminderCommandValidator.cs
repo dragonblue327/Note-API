@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace Note.Application.Notes.Commands.CreateNote
+namespace Note.Application.Notes.Commands.CreateReminder
 {
-	public class CreateReminderCommandValidator : AbstractValidator<CreateNoteCommand>
+	public class CreateReminderCommandValidator : AbstractValidator<CreateReminderCommand>
 	{
 		public CreateReminderCommandValidator()
 		{
@@ -10,6 +10,8 @@ namespace Note.Application.Notes.Commands.CreateNote
 			 .MaximumLength(200).WithMessage("Name should not exceed 200 characters");
 
 			RuleFor(a => a.Text).NotEmpty().WithMessage("Text is required");
+
+			RuleFor(a => a.ReminderTime).NotEmpty().WithMessage("ReminderTime is required");
 
 		}
 	}
