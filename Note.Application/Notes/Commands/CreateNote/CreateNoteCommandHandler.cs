@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Note.Application.Notes.Queries.GetNotes;
+using Note.Domain.Entity;
 using Note.Domain.Repository;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,18 @@ namespace Note.Application.Notes.Commands.CreateNote
 		private readonly IMapper _mapper;
 
 		public CreateReminderCommandHandler(INoteRepository noteRepository, IMapper mapper)
-        {
+		{
 			this._noteRepository = noteRepository;
 			this._mapper = mapper;
 		}
-        public async Task<NoteVm> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
+		public async Task<NoteVm> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
 		{
+
 			var noteEnity = new Domain.Entity.Note()
 			{
 				Title = request.Title,
 				Text = request.Text,
-				Tags = request.Tags??null,
+				Tags = request.Tags ?? new List<Tag>(),
 			};
 			var result = await _noteRepository.CreateAsync(noteEnity);
 			return _mapper.Map<NoteVm>(result);

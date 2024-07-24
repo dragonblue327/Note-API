@@ -27,8 +27,8 @@ namespace Note.Application.Notes.Commands.CreateTag
 			var tagEnity = new Tag()
 			{
 				Name = request.Name,
-				Notes = request.Notes??null,
-				Reminders = request.Reminders??null,
+				Notes = request.Notes,
+				Reminders = request.Reminders ?? new List<Reminder>(),
 			};
 			var result = await _tagRepository.CreateAsync(tagEnity);
 			return _mapper.Map<TagVm>(result);

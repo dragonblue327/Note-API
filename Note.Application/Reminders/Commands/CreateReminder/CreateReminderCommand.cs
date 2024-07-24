@@ -15,6 +15,6 @@ namespace Note.Application.Notes.Commands.CreateReminder
 		public string Title { get; set; }
 		public string Text { get; set; }
 		public DateTime ReminderTime { get; set; }
-		public List<Tag>? Tags { get; set; }
+		public List<Tag> Tags { get; set; }
 	}
 }

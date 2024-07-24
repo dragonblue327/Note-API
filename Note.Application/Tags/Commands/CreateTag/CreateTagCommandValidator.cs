@@ -8,7 +8,9 @@ namespace Note.Application.Notes.Commands.CreateNote
 		public CreateTagCommandValidator()
 		{
 			RuleFor(a => a.Name).NotEmpty().WithMessage("Name is required")
-			 .MaximumLength(50).WithMessage("Name should not exceed 50 characters");	
+			 .MaximumLength(50).WithMessage("Name should not exceed 50 characters");
+			RuleFor(a => a.Notes).NotEmpty().WithMessage("You cannot create tag withou note");
+
 
 		}
 	}

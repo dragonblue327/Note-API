@@ -24,7 +24,8 @@ namespace Note.Application.Notes.Commands.UpdateNote
 			{
 				Id = request.Id,
 				Title = request.Title,
-				Text = request.Text
+				Text = request.Text,
+				Tags = request.Tags ?? new List<Tag>(),
 			};
 			return await _noteRepository.UpdateAsync(request.Id, updateNoteEntity);
 	

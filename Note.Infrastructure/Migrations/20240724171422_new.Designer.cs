@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Note.Interface.Data;
+using Note.Infrastructure.Data;
 
 #nullable disable
 
-namespace Note.Interface.Migrations
+namespace Note.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240724171422_new")]
+    partial class @new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +99,7 @@ namespace Note.Interface.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("NoteTag");
+                    b.ToTable("NoteTag", (string)null);
                 });
 
             modelBuilder.Entity("ReminderTag", b =>
@@ -111,7 +114,7 @@ namespace Note.Interface.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("ReminderTag");
+                    b.ToTable("ReminderTag", (string)null);
                 });
 
             modelBuilder.Entity("NoteTag", b =>

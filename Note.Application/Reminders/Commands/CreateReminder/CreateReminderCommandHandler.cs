@@ -28,8 +28,8 @@ namespace Note.Application.Notes.Commands.CreateReminder
 			{
 				Title = request.Title,
 				Text = request.Text,
-				Tags = request.Tags??null,
 				ReminderTime = request.ReminderTime,
+				Tags = request.Tags ?? new List<Tag>(),
 			};
 			var result = await _reminderRepository.CreateAsync(reminderEnity);
 			return _mapper.Map<ReminderVm>(result);

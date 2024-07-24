@@ -1,8 +1,12 @@
 using Note.Application;
-using Note.Interface;
+using Note.Infrastructure;
+using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddControllers();

@@ -1,4 +1,8 @@
-﻿namespace Note.Domain.Entity
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
+namespace Note.Domain.Entity
 {
 	public class Reminder
 	{
@@ -6,7 +10,9 @@
 		public string Title { get; set; }
 		public string Text { get; set; }
 		public DateTime ReminderTime { get; set; }
-		public List<Tag>? Tags { get; set; }
+		[JsonIgnore]
+		[IgnoreDataMember]
+		public List<Tag> Tags { get; set; }
 	}
 
 }

@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Note.Interface.Migrations
+namespace Note.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class testmigration : Migration
+    public partial class @new : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

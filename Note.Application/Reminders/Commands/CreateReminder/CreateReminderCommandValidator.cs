@@ -11,7 +11,8 @@ namespace Note.Application.Notes.Commands.CreateReminder
 
 			RuleFor(a => a.Text).NotEmpty().WithMessage("Text is required");
 
-			RuleFor(a => a.ReminderTime).NotEmpty().WithMessage("ReminderTime is required");
+			RuleFor(a => a.ReminderTime).NotEmpty().WithMessage("Reminder Time is required");
+			RuleFor(a => a.Tags).NotEmpty().WithMessage("You cannot creat reminder without atag");
 
 		}
 	}

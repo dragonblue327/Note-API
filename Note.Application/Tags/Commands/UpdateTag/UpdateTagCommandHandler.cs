@@ -24,7 +24,7 @@ namespace Note.Application.Notes.Commands.UpdateTag
 			{
 				Id = request.Id,
 				Name = request.Name,
-				Notes = request.Notes ?? null,
+				Notes = request.Notes ,
 				Reminders = request.Reminders ?? null,
 			};
 			return await _tagRepository.UpdateAsync(request.Id, updateNoteEntity);
