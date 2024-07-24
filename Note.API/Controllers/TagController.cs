@@ -12,19 +12,19 @@ namespace Note.API.Controllers
 	[ApiController]
 	public class TagController : ApiControllerBase
 	{
-		[HttpPost]
+		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateTagCommand command)
 		{
 			var createdTag = await Sender.Send(command);
 			return CreatedAtAction(nameof(GetTagById), new { id = createdTag.Id }, createdTag);
 		}
-		[HttpDelete]
+		[HttpDelete("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			await Sender.Send(new DeleteTagCommand { Id = id });
 			return NoContent();
 		}
-		[HttpGet("id")]
+		[HttpGet("GetById")]
 		public async Task<IActionResult> GetTagById(int id)
 		{
 			var Tag = await Sender.Send(new GetTagByIdQuery() { TagId = id });
@@ -37,13 +37,13 @@ namespace Note.API.Controllers
 				return NotFound();
 			}
 		}
-		[HttpGet]
+		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
 			var Tags = await Sender.Send(new GetTagQuery());
 			return Ok(Tags);
 		}
-		[HttpPut("{id}")]
+		[HttpPut("{UpdateById}")]
 		public async Task<IActionResult> Update(int id, UpdateTagCommand command)
 		{
 			if (id != command.Id)

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Moq;
 using Note.Infrastructure.Data;
 using Note.Infrastructure.Repository;
-using Note.Domain;
 using Note.Domain.Entity;
 
 namespace TestNoteProjcet

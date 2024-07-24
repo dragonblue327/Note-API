@@ -7,7 +7,6 @@ using Note.Application.Notes.Commands.DeleteNote;
 using Note.Application.Notes.Commands.UpdateNote;
 using Note.Application.Notes.Queries.GetNoteById;
 using Note.Application.Notes.Queries.GetNotes;
-using Note.Application.Notes.Queries.GetTags;
 
 namespace Note.API.Controllers
 {
@@ -15,7 +14,7 @@ namespace Note.API.Controllers
 	[ApiController]
 	public class NoteController : ApiControllerBase
 	{
-		[HttpPost]
+		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateNoteCommand command)
 		{
 			
@@ -23,13 +22,13 @@ namespace Note.API.Controllers
 			var createdNote = await Sender.Send(command);
 			return CreatedAtAction(nameof(GetNoteById), new { id = createdNote.Id }, createdNote);
 		}
-		[HttpDelete]
+		[HttpDelete("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			await Sender.Send(new DeleteNoteCommand { Id = id });
 			return NoContent();
 		}
-		[HttpGet("id")]
+		[HttpGet("GetById")]
 		public async Task<IActionResult> GetNoteById(int id)
 		{
 			var note = await Sender.Send(new GetNoteByIdQuery() { NoteId = id });
@@ -42,13 +41,13 @@ namespace Note.API.Controllers
 				return NotFound();
 			}
 		}
-		[HttpGet]
+		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
 			var notes = await Sender.Send(new GetNoteQuery());
 			return Ok(notes);
 		}
-		[HttpPut("{id}")]
+		[HttpPut("{UpdateById}")]
 		public async Task<IActionResult> Update(int id, UpdateNoteCommand command)
 		{
 			if (!command.Tags.IsNullOrEmpty())

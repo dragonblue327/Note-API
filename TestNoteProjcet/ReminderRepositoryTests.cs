@@ -2,11 +2,6 @@
 using Note.Domain.Entity;
 using Note.Infrastructure.Data;
 using Note.Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestNoteProjcet
 {
