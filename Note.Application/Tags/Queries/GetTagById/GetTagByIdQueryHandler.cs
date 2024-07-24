@@ -12,17 +12,17 @@ namespace Note.Application.Notes.Queries.GetTagById
 {
 	public class GetTagByIdQueryHandler : IRequestHandler<GetTagByIdQuery, TagVm>
 	{
-		private readonly INoteRepository _noteRepository;
+		private readonly ITagRepository _tagRepository;
 		private readonly IMapper _mapper;
 
-		public GetTagByIdQueryHandler(INoteRepository noteRepository, IMapper mapper)
+		public GetTagByIdQueryHandler(ITagRepository tagRepository, IMapper mapper)
 		{
-			this._noteRepository = noteRepository;
+			this._tagRepository = tagRepository;
 			this._mapper = mapper;
 		}
 		public async Task<TagVm> Handle(GetTagByIdQuery request, CancellationToken cancellationToken)
 		{
-			var note = await _noteRepository.GetByIdAsync(request.TagId);
+			var note = await _tagRepository.GetByIdAsync(request.TagId);
 			return _mapper.Map<TagVm>(note);
 
 		}

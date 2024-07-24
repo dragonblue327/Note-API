@@ -39,8 +39,10 @@ namespace Note.Infrastructure.Repository
 
 		}
 
-		public async Task<Tag> GetByIdAsync(int id) => 
-			await _context.Tags.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+		public async Task<Tag> GetByIdAsync(int id)
+		{
+			return await _context.Tags.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+		}
 
 		public async Task<int> UpdateAsync(int id, Tag tag)
 		{

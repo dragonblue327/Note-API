@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Note.Application.Notes.Commands.CreateReminder;
 using Note.Application.Notes.Commands.DeleteReminder;
@@ -12,6 +13,12 @@ namespace Note.API.Controllers
 	[ApiController]
 	public class ReminderController : ApiControllerBase
 	{
+		private readonly ISender _sender;
+
+		public ReminderController(ISender sender)
+		{
+			_sender = sender;
+		}
 
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateReminderCommand command)

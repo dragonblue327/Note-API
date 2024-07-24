@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Note.Application.Notes.Commands.CreateNote;
@@ -14,20 +15,26 @@ namespace Note.API.Controllers
 	[ApiController]
 	public class NoteController : ApiControllerBase
 	{
+		private readonly ISender _sender;
+
+		public NoteController(ISender sender)
+		{
+			_sender = sender;
+		}
+
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateNoteCommand command)
 		{
-			
-
 			var createdNote = await Sender.Send(command);
 			return CreatedAtAction(nameof(GetNoteById), new { id = createdNote.Id }, createdNote);
 		}
 		[HttpDelete("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await Sender.Send(new DeleteNoteCommand { Id = id });
+			await _sender.Send(new DeleteNoteCommand { Id = id });
 			return NoContent();
 		}
+
 		[HttpGet("GetById")]
 		public async Task<IActionResult> GetNoteById(int id)
 		{
@@ -44,33 +51,20 @@ namespace Note.API.Controllers
 		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
-			var notes = await Sender.Send(new GetNoteQuery());
+			var notes = await _sender.Send(new GetNoteQuery());
 			return Ok(notes);
 		}
 		[HttpPut("{UpdateById}")]
 		public async Task<IActionResult> Update(int id, UpdateNoteCommand command)
 		{
-			if (!command.Tags.IsNullOrEmpty())
-			{
-				foreach (var tag in command.Tags)
-				{
-					var tempTag = new CreateTagCommand();
-					var send = CreatedAtAction(nameof(TagController.GetTagById), new { id = tag.Id }, tempTag);
-					if (send == null)
-					{
-						await Sender.Send(tempTag);
-					}
-				}
-			}
 			if (id != command.Id)
 			{
 				return BadRequest();
 			}
-			
 			await Sender.Send(command);
 			return NoContent();
-
 		}
+
 
 
 	}
