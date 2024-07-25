@@ -11,8 +11,7 @@ namespace Note.Application.Notes.Queries.GetNotes
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Text { get; set; }
-		[JsonIgnore]
-		[IgnoreDataMember]
+
 		public List<Tag>? Tags { get; set; } = new List<Tag>();
 	}
 }

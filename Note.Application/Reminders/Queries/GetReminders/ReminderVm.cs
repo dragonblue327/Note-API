@@ -16,8 +16,7 @@ namespace Note.Application.Notes.Queries.GetReminders
 		public string Title { get; set; }
 		public string Text { get; set; }
 		public DateTime ReminderTime { get; set; }
-		[JsonIgnore]
-		[IgnoreDataMember]
+
 		public List<Tag>? Tags { get; set; } = new List<Tag>();
 	}
 }

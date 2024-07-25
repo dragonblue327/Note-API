@@ -63,7 +63,7 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				return await _context.Notes.ToListAsync();
+				return await _context.Notes.Include(a=>a.Tags).ToListAsync();
 			}
 			catch (DbUpdateException ex)
 			{
@@ -83,6 +83,7 @@ namespace Note.Infrastructure.Repository
 				return await _context.Notes.AsNoTracking()
 										   .Include(a => a.Tags)
 										   .FirstOrDefaultAsync(a => a.Id == id);
+				
 			}
 			catch (DbUpdateException ex)
 			{

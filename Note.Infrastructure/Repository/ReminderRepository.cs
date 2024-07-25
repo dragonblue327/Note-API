@@ -62,7 +62,7 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				return await _context.Reminders.ToListAsync();
+				return await _context.Reminders.Include(a => a.Tags).ToListAsync();
 			}
 			catch (DbUpdateException ex)
 			{
@@ -78,7 +78,7 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				return await _context.Reminders.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+				return await _context.Reminders.AsNoTracking().Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == id);
 			}
 			catch (DbUpdateException ex)
 			{
