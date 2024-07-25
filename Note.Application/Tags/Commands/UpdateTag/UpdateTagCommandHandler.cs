@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Note.Application.Notes.Queries.GetReminders;
+using Note.Application.Notes.Queries.GetTags;
 using Note.Domain.Entity;
 using Note.Domain.Repository;
 using System;
@@ -11,15 +12,18 @@ using System.Threading.Tasks;
 
 namespace Note.Application.Notes.Commands.UpdateTag
 {
-	public class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, int>
+	public class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, TagVm>
 	{
 		private readonly ITagRepository _tagRepository;
+		private readonly IMapper _mapper;
 
-		public UpdateTagCommandHandler(ITagRepository tagRepository)
+
+		public UpdateTagCommandHandler(ITagRepository tagRepository , IMapper mapper)
 		{
 			this._tagRepository = tagRepository;
+			this._mapper = mapper;
 		}
-		public async Task<int> Handle(UpdateTagCommand request, CancellationToken cancellationToken)
+		public async Task<TagVm> Handle(UpdateTagCommand request, CancellationToken cancellationToken)
 		{
 			try
 			{
@@ -30,7 +34,8 @@ namespace Note.Application.Notes.Commands.UpdateTag
 					Notes = request.Notes ?? new List<Domain.Entity.Note>(),
 					Reminders = request.Reminders ?? new List<Reminder>(),
 				};
-				return await _tagRepository.UpdateAsync(request.Id, updateNoteEntity);
+				var result =  await _tagRepository.UpdateAsync(request.Id, updateNoteEntity) ;
+				return _mapper.Map<TagVm>(result);
 			}
 			catch (Exception ex)
 			{

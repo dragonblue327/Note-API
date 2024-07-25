@@ -17,7 +17,7 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				foreach (var tag in reminder.Tags)
+				foreach (var tag in reminder.Tags!)
 				{
 					tag.Id = 0;
 				}
@@ -78,7 +78,8 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				return await _context.Reminders.AsNoTracking().Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == id);
+				var tempReminder = await _context.Reminders.AsNoTracking().Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == id) ;
+				return tempReminder ?? new Reminder();
 			}
 			catch (DbUpdateException ex)
 			{
@@ -90,21 +91,21 @@ namespace Note.Infrastructure.Repository
 			}
 		}
 
-		public async Task<int> UpdateAsync(int id, Reminder reminder)
+		public async Task<Reminder> UpdateAsync(int id, Reminder reminder)
 		{
 			try
 			{
 				var existingReminder = await _context.Reminders.Include(r => r.Tags).FirstOrDefaultAsync(r => r.Id == id);
 				if (existingReminder == null)
 				{
-					return 0;
+					return new Reminder();
 				}
 
 				existingReminder.Title = reminder.Title;
 				existingReminder.Text = reminder.Text;
 				existingReminder.ReminderTime = reminder.ReminderTime;
 
-				existingReminder.Tags.Clear();
+				existingReminder.Tags!.Clear();
 
 				if (reminder.Tags != null)
 				{
@@ -118,23 +119,25 @@ namespace Note.Infrastructure.Repository
 								existingTag.Name = tag.Name ?? existingTag.Name;
 							}
 							
-							existingTag.Reminders.Add(existingReminder);
+							existingTag.Reminders!.Add(existingReminder);
 							existingReminder.Tags.Add(existingTag);
 						}
 						else
 						{
 							var newTag = new Tag
 							{
-								Name = tag.Name
+								Name = tag.Name!
 							};
-							newTag.Reminders.Add(existingReminder);
+							newTag.Reminders!.Add(existingReminder);
 							existingReminder.Tags.Add(newTag);
 						}
 					}
 				}
 
 				_context.Update(existingReminder);
-				return await _context.SaveChangesAsync();
+				await _context.SaveChangesAsync();
+				return existingReminder;
+					
 			}
 			catch (DbUpdateException ex)
 			{

@@ -33,7 +33,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpDelete("Delete")]
+		[HttpPost("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			try
@@ -47,7 +47,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpGet("GetById")]
+		[HttpPost("GetById")]
 		public async Task<IActionResult> GetNoteById(int id)
 		{
 			try
@@ -68,7 +68,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpGet("GetAll")]
+		[HttpPost("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
 			try
@@ -82,7 +82,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpPut("UpdateById")]
+		[HttpPost("UpdateById")]
 		public async Task<IActionResult> Update(int id, UpdateNoteCommand command)
 		{
 			try
@@ -91,8 +91,8 @@ namespace Note.API.Controllers
 				{
 					return BadRequest();
 				}
-				await _sender.Send(command);
-				return NoContent();
+				var result = await _sender.Send(command);
+				return Ok(result);
 			}
 			catch (Exception ex)
 			{

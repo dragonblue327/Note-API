@@ -33,7 +33,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpDelete("Delete")]
+		[HttpPost("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			try
@@ -47,7 +47,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpGet("GetById")]
+		[HttpPost("GetById")]
 		public async Task<IActionResult> GetTagById(int id)
 		{
 			try
@@ -68,7 +68,7 @@ namespace Note.API.Controllers
 			}
 		}
 
-		[HttpGet("GetAll")]
+		[HttpPost("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
 			try
@@ -81,7 +81,7 @@ namespace Note.API.Controllers
 				throw new Exception($"An error occurred while retrieving the tags: {ex.Message}", ex);
 			}
 		}
-		[HttpPut("UpdateById")]
+		[HttpPost("UpdateById")]
 		public async Task<IActionResult> Update(int id, UpdateTagCommand command)
 		{
 			try
@@ -90,8 +90,8 @@ namespace Note.API.Controllers
 				{
 					return BadRequest();
 				}
-				await _sender.Send(command);
-				return NoContent();
+				var tag = await _sender.Send(command);
+				return Ok(tag);
 			}
 			catch (Exception ex)
 			{

@@ -9,8 +9,8 @@ namespace Note.Application.Notes.Queries.GetNotes
 	{
 
 		public int Id { get; set; }
-		public string Title { get; set; }
-		public string Text { get; set; }
+		public string Title { get; set; } = string.Empty;
+		public string Text { get; set; } = string.Empty;
 
 		public List<Tag>? Tags { get; set; } = new List<Tag>();
 	}

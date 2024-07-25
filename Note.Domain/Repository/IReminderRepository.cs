@@ -11,7 +11,7 @@ namespace Note.Domain.Repository
 		Task<List<Reminder>> GetAllRemindersAsync();
 		Task<Reminder> GetByIdAsync(int id);
 		Task<Reminder> CreateAsync(Reminder reminder);
-		Task<int> UpdateAsync(int id, Reminder reminder);
+		Task<Reminder> UpdateAsync(int id, Reminder reminder);
 		Task<int> DeleteAsync(int id);
 
 	}

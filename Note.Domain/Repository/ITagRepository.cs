@@ -11,7 +11,7 @@ namespace Note.Domain.Repository
 		Task<List<Tag>> GetAllTagsAsync();
 		Task<Tag> GetByIdAsync(int id);
 		Task<Tag> CreateAsync(Tag tag);
-		Task<int> UpdateAsync(int id, Tag tag);
+		Task<Tag> UpdateAsync(int id, Tag tag);
 		Task<int> DeleteAsync(int id);
 
 	}

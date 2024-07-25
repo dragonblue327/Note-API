@@ -13,11 +13,12 @@ namespace Note.Infrastructure.Repository
 		{
 			this._context = appDBContext;
 		}
-		public async Task<Domain.Entity.Note> CreateAsync(Domain.Entity.Note note)
+
+        public async Task<Domain.Entity.Note> CreateAsync(Domain.Entity.Note note)
 		{
 			try
 			{
-				foreach (var tag in note.Tags) {
+				foreach (var tag in note.Tags!) {
 					tag.Id = 0;
 				}
 				await _context.Notes.AddAsync(note);
@@ -80,9 +81,10 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				return await _context.Notes.AsNoTracking()
+				var tempNote=  await _context.Notes.AsNoTracking()
 										   .Include(a => a.Tags)
 										   .FirstOrDefaultAsync(a => a.Id == id);
+				return tempNote ?? new Domain.Entity.Note();
 				
 			}
 			catch (DbUpdateException ex)
@@ -96,20 +98,20 @@ namespace Note.Infrastructure.Repository
 
 		}
 
-		public async Task<int> UpdateAsync(int id, Domain.Entity.Note note)
+		public async Task<Domain.Entity.Note> UpdateAsync(int id, Domain.Entity.Note note)
 		{
 			try
 			{
 				var existingNote = await _context.Notes.Include(n => n.Tags).FirstOrDefaultAsync(a => a.Id == id);
 				if (existingNote == null)
 				{
-					return 0;
+					return new Domain.Entity.Note();
 				}
 
 				existingNote.Title = note.Title;
 				existingNote.Text = note.Text;
 
-				existingNote.Tags.Clear();
+				existingNote.Tags?.Clear();
 
 				if (note.Tags != null)
 				{
@@ -122,22 +124,23 @@ namespace Note.Infrastructure.Repository
 							{
 								existingTag.Name = tag.Name ?? existingTag.Name;
 							}
-							existingNote.Tags.Add(existingTag);
+							existingNote.Tags!.Add(existingTag);
 						}
 						else
 						{
 							var newTag = new Tag
 							{
-								Name = tag.Name
+								Name = tag.Name!
 							};
-							newTag.Notes.Add(existingNote);
-							existingNote.Tags.Add(newTag);
+							newTag.Notes!.Add(existingNote);
+							existingNote.Tags!.Add(newTag);
 						}
 					}
 				}
 
 				_context.Update(existingNote);
-				return await _context.SaveChangesAsync();
+				await _context.SaveChangesAsync();
+				return existingNote;
 			}
 			catch (DbUpdateException ex)
 			{

@@ -18,14 +18,6 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				foreach (var reminder in tag.Reminders)
-				{
-					reminder.Id = 0;
-				}
-				foreach (var note in tag.Notes)
-				{
-					note.Id = 0;
-				}
 				await _context.Tags.AddAsync(tag);
 				await _context.SaveChangesAsync();
 				return tag;
@@ -84,7 +76,7 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				return await _context.Tags.AsNoTracking().Include(a => a.Notes).Include(a => a.Reminders).FirstOrDefaultAsync(a => a.Id == id);
+				return await _context.Tags.AsNoTracking().Include(a => a.Notes).Include(a => a.Reminders).FirstOrDefaultAsync(a => a.Id == id) ?? new Tag();
 			}
 			catch (DbUpdateException ex)
 			{
@@ -96,14 +88,14 @@ namespace Note.Infrastructure.Repository
 			}
 		}
 
-		public async Task<int> UpdateAsync(int id, Tag tag)
+		public async Task<Tag> UpdateAsync(int id, Tag tag)
 		{
 			try
 			{
 				var existingTag = await _context.Tags.Include(t => t.Notes).Include(t => t.Reminders).FirstOrDefaultAsync(t => t.Id == id);
 				if (existingTag == null)
 				{
-					return 0;
+					return new Tag();
 				}
 				existingTag.Name = tag.Name;
 				if (existingTag.Notes != null)
@@ -140,19 +132,19 @@ namespace Note.Infrastructure.Repository
 						{
 							var newNote = new Domain.Entity.Note
 							{
-								Text = note.Text,
-								Title = note.Title
+								Text = note.Text!,
+								Title = note.Title!
 							};
 							if (newNote.Tags == null)
 							{
 								newNote.Tags = new List<Tag>();
 							}
 							newNote.Tags.Add(existingTag);
-							existingTag.Notes.Add(newNote);
+							existingTag.Notes?.Add(newNote);
 						}
 					}
 				}
-				existingTag.Reminders.Clear();
+				existingTag.Reminders?.Clear();
 				if (tag.Reminders != null)
 				{
 					foreach (var reminder in tag.Reminders)
@@ -173,14 +165,14 @@ namespace Note.Infrastructure.Repository
 								existingReminder.Tags = new List<Tag>();
 							}
 							existingReminder.Tags.Add(existingTag);
-							existingTag.Reminders.Add(existingReminder);
+							existingTag.Reminders?.Add(existingReminder);
 						}
 						else
 						{
 							var newReminder = new Reminder
 							{
-								Text = reminder.Text,
-								Title = reminder.Title,
+								Text = reminder.Text!,
+								Title = reminder.Title!,
 								ReminderTime = reminder.ReminderTime
 							};
 							if (newReminder.Tags == null)
@@ -188,12 +180,13 @@ namespace Note.Infrastructure.Repository
 								newReminder.Tags = new List<Tag>();
 							}
 							newReminder.Tags.Add(existingTag);
-							existingTag.Reminders.Add(newReminder);
+							existingTag.Reminders?.Add(newReminder);
 						}
 					}
 				}
 				_context.Update(existingTag);
-				return await _context.SaveChangesAsync();
+				 await _context.SaveChangesAsync();
+				return existingTag;
 			}
 			catch (DbUpdateException ex)
 			{

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Note.Application.Notes.Queries.GetNotes;
 using Note.Domain.Entity;
 using Note.Domain.Repository;
 using System;
@@ -10,16 +11,18 @@ using System.Threading.Tasks;
 
 namespace Note.Application.Notes.Commands.UpdateNote
 {
-	public class UpdateNoteCommandHandler : IRequestHandler<UpdateNoteCommand, int>
+	public class UpdateNoteCommandHandler : IRequestHandler<UpdateNoteCommand, NoteVm>
 	{
 		private readonly INoteRepository _noteRepository;
+		private readonly IMapper _mapper;
 
-		public UpdateNoteCommandHandler(INoteRepository noteRepository)
+		public UpdateNoteCommandHandler(INoteRepository noteRepository, IMapper mapper)
 		{
 			this._noteRepository = noteRepository;
+			_mapper = mapper;
 		}
 
-		public async Task<int> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
+		public async Task<NoteVm> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
 		{
 			try
 			{
@@ -30,7 +33,8 @@ namespace Note.Application.Notes.Commands.UpdateNote
 					Text = request.Text,
 					Tags = request.Tags ?? new List<Tag>(),
 				};
-				return await _noteRepository.UpdateAsync(request.Id, updateNoteEntity);
+				var result = await _noteRepository.UpdateAsync(request.Id, updateNoteEntity);
+				return _mapper.Map<NoteVm>(result); ;
 			}
 			catch (Exception ex)
 			{

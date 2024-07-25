@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Note.Application.Notes.Queries.GetReminders;
 using Note.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Note.Application.Notes.Commands.UpdateReminder
 {
-	public class UpdateReminderCommand : IRequest<int>
+	public class UpdateReminderCommand : IRequest<ReminderVm>
 	{
 		public int Id { get; set; }
-		public string Title { get; set; }
-		public string Text { get; set; }
+		public string Title { get; set; } = string.Empty;
+		public string Text { get; set; } = string.Empty;
 		public DateTime ReminderTime { get; set; }
 		public List<Tag>? Tags { get; set; }
 	}
