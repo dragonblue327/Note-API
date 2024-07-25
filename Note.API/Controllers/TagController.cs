@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Note.Application.Notes.Commands.CreateTag;
 using Note.Application.Notes.Commands.DeleteTag;
@@ -12,12 +12,19 @@ namespace Note.API.Controllers
 	[ApiController]
 	public class TagController : ApiControllerBase
 	{
+		private readonly ISender _sender;
+
+		public TagController(ISender sender)
+		{
+			_sender = sender;
+		}
+
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateTagCommand command)
 		{
 			try
 			{
-				var createdTag = await Sender.Send(command);
+				var createdTag = await _sender.Send(command);
 				return CreatedAtAction(nameof(GetTagById), new { id = createdTag.Id }, createdTag);
 			}
 			catch (Exception ex)
@@ -31,7 +38,7 @@ namespace Note.API.Controllers
 		{
 			try
 			{
-				await Sender.Send(new DeleteTagCommand { Id = id });
+				await _sender.Send(new DeleteTagCommand { Id = id });
 				return NoContent();
 			}
 			catch (Exception ex)
@@ -45,7 +52,7 @@ namespace Note.API.Controllers
 		{
 			try
 			{
-				var tag = await Sender.Send(new GetTagByIdQuery { TagId = id });
+				var tag = await _sender.Send(new GetTagByIdQuery { TagId = id });
 				if (tag != null)
 				{
 					return Ok(tag);
@@ -66,7 +73,7 @@ namespace Note.API.Controllers
 		{
 			try
 			{
-				var tags = await Sender.Send(new GetTagQuery());
+				var tags = await _sender.Send(new GetTagQuery());
 				return Ok(tags);
 			}
 			catch (Exception ex)
@@ -74,8 +81,7 @@ namespace Note.API.Controllers
 				throw new Exception($"An error occurred while retrieving the tags: {ex.Message}", ex);
 			}
 		}
-
-		[HttpPut("{UpdateById}")]
+		[HttpPut("UpdateById")]
 		public async Task<IActionResult> Update(int id, UpdateTagCommand command)
 		{
 			try
@@ -84,7 +90,7 @@ namespace Note.API.Controllers
 				{
 					return BadRequest();
 				}
-				await Sender.Send(command);
+				await _sender.Send(command);
 				return NoContent();
 			}
 			catch (Exception ex)
@@ -92,6 +98,9 @@ namespace Note.API.Controllers
 				throw new Exception($"An error occurred while updating the tag: {ex.Message}", ex);
 			}
 		}
+
+
+		
 	}
 }
 

@@ -13,6 +13,6 @@ This app is built to use with SQL Server. If you have another DB, you need to ch
 ## To run this app, you should migrate first, then update the DB:
     add-migration "example"
     update-database
- ![Alt text](images/example.png)   
+ ![add-migration "example"](https://github.com/dragonblue327/Note-API/blob/master/contant/migration-example.jpg?raw=true)   
 
 Don’t forget to set the Note.Api as the startup project!!!.

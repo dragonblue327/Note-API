@@ -16,7 +16,7 @@ namespace Note.Application.Notes.Queries.GetTags
 		public string Name { get; set; }
 		[JsonIgnore]
 		[IgnoreDataMember]
-		public List<Domain.Entity.Note> Notes { get; set; } = new List<Domain.Entity.Note>();
+		public List<Domain.Entity.Note>? Notes { get; set; } = new List<Domain.Entity.Note>();
 		[JsonIgnore]
 		[IgnoreDataMember]
 		public List<Reminder>? Reminders { get; set; } = new List<Reminder>();

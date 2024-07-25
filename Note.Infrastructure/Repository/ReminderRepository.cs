@@ -17,17 +17,21 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
+				foreach (var tag in reminder.Tags)
+				{
+					tag.Id = 0;
+				}
 				await _context.Reminders.AddAsync(reminder);
 				await _context.SaveChangesAsync();
 				return reminder;
 			}
 			catch (DbUpdateException ex)
 			{
-				throw new Exception($"An error occurred while updating the database: {ex.Message}", ex);
+				throw new Exception($"An error occurred while updating the database CreateAsync : {ex.Message}", ex);
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new Exception($"An error occurred while creating the Reminder: {ex.Message}", ex);
 			}
 		}
 
@@ -44,21 +48,29 @@ namespace Note.Infrastructure.Repository
 				_context.Reminders.Remove(reminder);
 				return await _context.SaveChangesAsync();
 			}
+			catch (DbUpdateException ex)
+			{
+				throw new Exception("An error occurred while updating the database DeleteAsync.", ex);
+			}
 			catch (Exception ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new Exception($"An error occurred while delete the Reminder: {ex.Message}", ex);
 			}
 		}
 
-		public async Task<List<Reminder>> GetAllNotesAsync()
+		public async Task<List<Reminder>> GetAllRemindersAsync()
 		{
 			try
 			{
 				return await _context.Reminders.ToListAsync();
 			}
+			catch (DbUpdateException ex)
+			{
+				throw new Exception("An error occurred while updating the database GetAllReminderAsync.", ex);
+			}
 			catch (Exception ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new Exception($"An error occurred while get all reminders: {ex.Message}", ex);
 			}
 		}
 
@@ -68,9 +80,13 @@ namespace Note.Infrastructure.Repository
 			{
 				return await _context.Reminders.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
 			}
+			catch (DbUpdateException ex)
+			{
+				throw new Exception("An error occurred while updating the database GetByIdAsync.", ex);
+			}
 			catch (Exception ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new Exception($"An error occurred while get reminder by id: {ex.Message}", ex);
 			}
 		}
 
@@ -78,17 +94,18 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				var tempReminder = await _context.Reminders.Include(n => n.Tags).FirstOrDefaultAsync(a => a.Id == id);
-				if (tempReminder == null)
+				var existingReminder = await _context.Reminders.Include(r => r.Tags).FirstOrDefaultAsync(r => r.Id == id);
+				if (existingReminder == null)
 				{
 					return 0;
 				}
 
-				tempReminder.Title = reminder.Title;
-				tempReminder.Text = reminder.Text;
-				tempReminder.ReminderTime = reminder.ReminderTime;
+				existingReminder.Title = reminder.Title;
+				existingReminder.Text = reminder.Text;
+				existingReminder.ReminderTime = reminder.ReminderTime;
 
-				tempReminder.Tags.Clear();
+				existingReminder.Tags.Clear();
+
 				if (reminder.Tags != null)
 				{
 					foreach (var tag in reminder.Tags)
@@ -96,7 +113,13 @@ namespace Note.Infrastructure.Repository
 						var existingTag = await _context.Tags.FindAsync(tag.Id);
 						if (existingTag != null)
 						{
-							tempReminder.Tags.Add(existingTag);
+							if (existingTag.Name != tag.Name)
+							{
+								existingTag.Name = tag.Name ?? existingTag.Name;
+							}
+							
+							existingTag.Reminders.Add(existingReminder);
+							existingReminder.Tags.Add(existingTag);
 						}
 						else
 						{
@@ -104,18 +127,25 @@ namespace Note.Infrastructure.Repository
 							{
 								Name = tag.Name
 							};
-							tempReminder.Tags.Add(newTag);
+							newTag.Reminders.Add(existingReminder);
+							existingReminder.Tags.Add(newTag);
 						}
 					}
 				}
 
+				_context.Update(existingReminder);
 				return await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new Exception("An error occurred while updating the database.", ex);
 			}
 			catch (Exception ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new Exception($"An error occurred while updating the reminder: {ex.Message}", ex);
 			}
 		}
+
 
 	}
 }

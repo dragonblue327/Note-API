@@ -17,7 +17,7 @@ namespace Note.Domain.Entity
 		public string Text { get; set; }
 		[JsonIgnore]
 		[IgnoreDataMember]
-		public ICollection<Tag> Tags { get; set; } 
+		public ICollection<Tag>? Tags { get; set; } =new List<Tag>();
 	}
 
 }

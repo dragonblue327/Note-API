@@ -12,7 +12,7 @@ namespace Note.Domain.Entity
 		public DateTime ReminderTime { get; set; }
 		[JsonIgnore]
 		[IgnoreDataMember]
-		public List<Tag> Tags { get; set; }
+		public List<Tag>? Tags { get; set; }= new List<Tag>();
 	}
 
 }

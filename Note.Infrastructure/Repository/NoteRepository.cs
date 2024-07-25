@@ -17,6 +17,9 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
+				foreach (var tag in note.Tags) {
+					tag.Id = 0;
+				}
 				await _context.Notes.AddAsync(note);
 				await _context.SaveChangesAsync();
 				return note;
@@ -96,16 +99,17 @@ namespace Note.Infrastructure.Repository
 		{
 			try
 			{
-				var tempNote = await _context.Notes.Include(n => n.Tags).FirstOrDefaultAsync(a => a.Id == id);
-				if (tempNote == null)
+				var existingNote = await _context.Notes.Include(n => n.Tags).FirstOrDefaultAsync(a => a.Id == id);
+				if (existingNote == null)
 				{
 					return 0;
 				}
 
-				tempNote.Title = note.Title;
-				tempNote.Text = note.Text;
+				existingNote.Title = note.Title;
+				existingNote.Text = note.Text;
 
-				tempNote.Tags.Clear();
+				existingNote.Tags.Clear();
+
 				if (note.Tags != null)
 				{
 					foreach (var tag in note.Tags)
@@ -113,7 +117,11 @@ namespace Note.Infrastructure.Repository
 						var existingTag = await _context.Tags.FindAsync(tag.Id);
 						if (existingTag != null)
 						{
-							tempNote.Tags.Add(existingTag);
+							if (existingTag.Name != tag.Name)
+							{
+								existingTag.Name = tag.Name ?? existingTag.Name;
+							}
+							existingNote.Tags.Add(existingTag);
 						}
 						else
 						{
@@ -121,11 +129,13 @@ namespace Note.Infrastructure.Repository
 							{
 								Name = tag.Name
 							};
-							tempNote.Tags.Add(newTag);
+							newTag.Notes.Add(existingNote);
+							existingNote.Tags.Add(newTag);
 						}
 					}
 				}
 
+				_context.Update(existingNote);
 				return await _context.SaveChangesAsync();
 			}
 			catch (DbUpdateException ex)
@@ -136,7 +146,9 @@ namespace Note.Infrastructure.Repository
 			{
 				throw new Exception("An error occurred while updating the note.", ex);
 			}
-
 		}
+
+
+
 	}
 }

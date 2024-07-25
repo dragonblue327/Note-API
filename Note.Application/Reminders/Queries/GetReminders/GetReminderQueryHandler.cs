@@ -20,7 +20,7 @@ namespace Note.Application.Notes.Queries.GetReminder
 		{
 			try
 			{
-				var reminders = await _reminderRepository.GetAllNotesAsync();
+				var reminders = await _reminderRepository.GetAllRemindersAsync();
 				var reminderList = _mapper.Map<List<ReminderVm>>(reminders);
 				return reminderList;
 			}

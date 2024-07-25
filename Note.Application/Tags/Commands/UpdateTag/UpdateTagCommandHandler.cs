@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Note.Application.Notes.Queries.GetReminders;
 using Note.Domain.Entity;
 using Note.Domain.Repository;
 using System;
@@ -26,8 +27,8 @@ namespace Note.Application.Notes.Commands.UpdateTag
 				{
 					Id = request.Id,
 					Name = request.Name,
-					Notes = request.Notes,
-					Reminders = request.Reminders ?? null,
+					Notes = request.Notes ?? new List<Domain.Entity.Note>(),
+					Reminders = request.Reminders ?? new List<Reminder>(),
 				};
 				return await _tagRepository.UpdateAsync(request.Id, updateNoteEntity);
 			}

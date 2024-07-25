@@ -8,7 +8,7 @@ namespace Note.Domain.Repository
 {
 	public interface IReminderRepository
 	{
-		Task<List<Reminder>> GetAllNotesAsync();
+		Task<List<Reminder>> GetAllRemindersAsync();
 		Task<Reminder> GetByIdAsync(int id);
 		Task<Reminder> CreateAsync(Reminder reminder);
 		Task<int> UpdateAsync(int id, Reminder reminder);
