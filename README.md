@@ -18,15 +18,15 @@ This app is built to use with SQL Server. If you have another DB, you need to ch
 Don’t forget to set the Note.Api as the startup project!!!.
 
 
-# Create 
+## Create 
 	all create methods can create new objects and create relationship between objects. 
-# Delete 
+## Delete 
 	all delete methods can delete object but will not delete related objects.
-# GetAll
+## GetAll
 	all GetAll methods can return objects and related objects.
-# GetById
+## GetById
 	all GetById methods can return object and related objects without tracking.
-# Update
+## Update
 	all update methods can update objects and create relationship between objects 
 	if you will try to create relation to object not found it will create the object 
 	and can update related objects.
