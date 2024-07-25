@@ -2,7 +2,8 @@
 
 This API app is for creating notes and reminders with flags. Built with .NET 7.
 
-## Note: This project is incomplete
+## Note: This project is incomplete 
+	 A friend once said, ‘You can write a calculator in a day, but perfecting it can take a lifetime.’
 
 ## Project Overview
 	Built with Clean Architecture, ASP.NET Core 7 Web API, and CQRS.
