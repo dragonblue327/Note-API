@@ -1,6 +1,6 @@
 # Note-API Application
 
-This API app is for creating notes and reminders with flags. Built with .NET 7.
+This API app is for creating notes and reminders with tags. Built with .NET 7.
 
 ## Note: This project is incomplete 
 	 A friend once said, ‘You can write a calculator in a day, but perfecting it can take a lifetime.’
