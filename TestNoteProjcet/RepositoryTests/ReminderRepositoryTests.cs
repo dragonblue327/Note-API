@@ -69,7 +69,7 @@ namespace TestNoteProjcet.RepositoryTests
             await _context.SaveChangesAsync();
 
             // Act
-            var result = await _repository.GetAllNotesAsync();
+            var result = await _repository.GetAllRemindersAsync();
 
             // Assert
             Assert.Equal(2, result.Count);
