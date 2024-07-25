@@ -16,9 +16,18 @@ namespace Note.Application.Notes.Commands.DeleteReminder
 		{
 			this._reminderRepository = reminderRepository;
 		}
+
 		public async Task<int> Handle(DeleteReminderCommand request, CancellationToken cancellationToken)
 		{
-			return await _reminderRepository.DeleteAsync(request.Id);
+			try
+			{
+				return await _reminderRepository.DeleteAsync(request.Id);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

@@ -16,6 +16,7 @@ public static class ConfigureServices
 		options.UseSqlServer(configration.GetConnectionString("ConStr") ??
 		throw new InvalidOperationException("Connection String 'ConStr' Not Found")));
 
+		services.AddScoped<CustomExceptionFilter>();
 		services.AddTransient<INoteRepository, NoteRepository>();
 		services.AddTransient<IReminderRepository, ReminderRepository>();
 		services.AddTransient<ITagRepository, TagRepository>();

@@ -23,46 +23,83 @@ namespace Note.API.Controllers
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateReminderCommand command)
 		{
-			var createdReminder = await Sender.Send(command);
-			return CreatedAtAction(nameof(GetReminderById), new { id = createdReminder.Id }, createdReminder);
+			try
+			{
+				var createdReminder = await _sender.Send(command);
+				return CreatedAtAction(nameof(GetReminderById), new { id = createdReminder.Id }, createdReminder);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while creating the reminder: {ex.Message}", ex);
+			}
 		}
+
 		[HttpDelete("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await Sender.Send(new DeleteReminderCommand { Id = id });
-			return NoContent();
+			try
+			{
+				await _sender.Send(new DeleteReminderCommand { Id = id });
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while deleting the reminder: {ex.Message}", ex);
+			}
 		}
+
 		[HttpGet("GetById")]
 		public async Task<IActionResult> GetReminderById(int id)
 		{
-			var reminder = await Sender.Send(new GetReminderByIdQuery() { ReminderId = id });
-			if (reminder != null)
+			try
 			{
-				return Ok(reminder);
+				var reminder = await _sender.Send(new GetReminderByIdQuery { ReminderId = id });
+				if (reminder != null)
+				{
+					return Ok(reminder);
+				}
+				else
+				{
+					return NotFound();
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				return NotFound();
+				throw new Exception($"An error occurred while retrieving the reminder: {ex.Message}", ex);
 			}
 		}
+
 		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
-			var Reminders = await Sender.Send(new GetReminderQuery());
-			return Ok(Reminders);
+			try
+			{
+				var reminders = await _sender.Send(new GetReminderQuery());
+				return Ok(reminders);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while retrieving the reminders: {ex.Message}", ex);
+			}
 		}
-		[HttpPut("{UpdateById}")]
+
+		[HttpPut("UpdateById")]
 		public async Task<IActionResult> Update(int id, UpdateReminderCommand command)
 		{
-			if (id != command.Id)
+			try
 			{
-				return BadRequest();
+				if (id != command.Id)
+				{
+					return BadRequest();
+				}
+				await _sender.Send(command);
+				return NoContent();
 			}
-			await Sender.Send(command);
-			return NoContent();
-
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while updating the reminder: {ex.Message}", ex);
+			}
 		}
-
-
 	}
 }
+

@@ -21,17 +21,25 @@ namespace Note.Application.Notes.Commands.CreateNote
 			this._noteRepository = noteRepository;
 			this._mapper = mapper;
 		}
+
 		public async Task<NoteVm> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
 		{
-
-			var noteEnity = new Domain.Entity.Note()
+			try
 			{
-				Title = request.Title,
-				Text = request.Text,
-				Tags = request.Tags ?? new List<Tag>(),
-			};
-			var result = await _noteRepository.CreateAsync(noteEnity);
-			return _mapper.Map<NoteVm>(result);
+				var noteEntity = new Domain.Entity.Note()
+				{
+					Title = request.Title,
+					Text = request.Text,
+					Tags = request.Tags ?? new List<Tag>(),
+				};
+				var result = await _noteRepository.CreateAsync(noteEntity);
+				return _mapper.Map<NoteVm>(result);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

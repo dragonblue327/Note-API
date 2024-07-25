@@ -18,7 +18,14 @@ namespace Note.Application.Notes.Commands.DeleteTag
 		}
 		public async Task<int> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
 		{
-			return await _tagRepository.DeleteAsync(request.Id);
+			try
+			{
+				return await _tagRepository.DeleteAsync(request.Id);
+			}
+			catch (Exception ex)
+			{ 
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }

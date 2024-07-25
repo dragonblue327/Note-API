@@ -15,46 +15,83 @@ namespace Note.API.Controllers
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateTagCommand command)
 		{
-			var createdTag = await Sender.Send(command);
-			return CreatedAtAction(nameof(GetTagById), new { id = createdTag.Id }, createdTag);
+			try
+			{
+				var createdTag = await Sender.Send(command);
+				return CreatedAtAction(nameof(GetTagById), new { id = createdTag.Id }, createdTag);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while creating the tag: {ex.Message}", ex);
+			}
 		}
+
 		[HttpDelete("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await Sender.Send(new DeleteTagCommand { Id = id });
-			return NoContent();
+			try
+			{
+				await Sender.Send(new DeleteTagCommand { Id = id });
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while deleting the tag: {ex.Message}", ex);
+			}
 		}
+
 		[HttpGet("GetById")]
 		public async Task<IActionResult> GetTagById(int id)
 		{
-			var Tag = await Sender.Send(new GetTagByIdQuery() { TagId = id });
-			if (Tag != null)
+			try
 			{
-				return Ok(Tag);
+				var tag = await Sender.Send(new GetTagByIdQuery { TagId = id });
+				if (tag != null)
+				{
+					return Ok(tag);
+				}
+				else
+				{
+					return NotFound();
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				return NotFound();
+				throw new Exception($"An error occurred while retrieving the tag: {ex.Message}", ex);
 			}
 		}
+
 		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
-			var Tags = await Sender.Send(new GetTagQuery());
-			return Ok(Tags);
+			try
+			{
+				var tags = await Sender.Send(new GetTagQuery());
+				return Ok(tags);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while retrieving the tags: {ex.Message}", ex);
+			}
 		}
+
 		[HttpPut("{UpdateById}")]
 		public async Task<IActionResult> Update(int id, UpdateTagCommand command)
 		{
-			if (id != command.Id)
+			try
 			{
-				return BadRequest();
+				if (id != command.Id)
+				{
+					return BadRequest();
+				}
+				await Sender.Send(command);
+				return NoContent();
 			}
-			await Sender.Send(command);
-			return NoContent();
-
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while updating the tag: {ex.Message}", ex);
+			}
 		}
-
-
 	}
 }
+

@@ -2,11 +2,6 @@
 using MediatR;
 using Note.Application.Notes.Queries.GetNotes;
 using Note.Domain.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Note.Application.Notes.Queries.GetNoteById
 {
@@ -20,11 +15,19 @@ namespace Note.Application.Notes.Queries.GetNoteById
 			this._noteRepository = noteRepository;
 			this._mapper = mapper;
 		}
+
 		public async Task<NoteVm> Handle(GetNoteByIdQuery request, CancellationToken cancellationToken)
 		{
-			var note = await _noteRepository.GetByIdAsync(request.NoteId);
-			return _mapper.Map<NoteVm>(note);
-
+			try
+			{
+				var note = await _noteRepository.GetByIdAsync(request.NoteId);
+				return _mapper.Map<NoteVm>(note);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

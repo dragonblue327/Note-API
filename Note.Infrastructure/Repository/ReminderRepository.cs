@@ -15,70 +15,107 @@ namespace Note.Infrastructure.Repository
 		}
 		public async Task<Reminder> CreateAsync(Reminder reminder)
 		{
-			await _context.Reminders.AddAsync(reminder);
-			await _context.SaveChangesAsync();
-			return reminder;
+			try
+			{
+				await _context.Reminders.AddAsync(reminder);
+				await _context.SaveChangesAsync();
+				return reminder;
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new Exception($"An error occurred while updating the database: {ex.Message}", ex);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 
 		public async Task<int> DeleteAsync(int id)
 		{
-			var reminder = await _context.Reminders.FindAsync(id);
-			if (reminder == null)
+			try
 			{
-				return 0; 
+				var reminder = await _context.Reminders.FindAsync(id);
+				if (reminder == null)
+				{
+					return 0;
+				}
+
+				_context.Reminders.Remove(reminder);
+				return await _context.SaveChangesAsync();
 			}
-
-			_context.Reminders.Remove(reminder);
-			return await _context.SaveChangesAsync();
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
-
 
 		public async Task<List<Reminder>> GetAllNotesAsync()
 		{
-			return await _context.Reminders.ToListAsync();
-
+			try
+			{
+				return await _context.Reminders.ToListAsync();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 
 		public async Task<Reminder> GetByIdAsync(int id)
 		{
-			return await _context.Reminders.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+			try
+			{
+				return await _context.Reminders.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 
 		public async Task<int> UpdateAsync(int id, Reminder reminder)
 		{
-			var tempReminder = await _context.Reminders.Include(n => n.Tags).FirstOrDefaultAsync(a => a.Id == id);
-			if (tempReminder == null)
+			try
 			{
-				return 0;
-			}
-
-			tempReminder.Title = reminder.Title;
-			tempReminder.Text = reminder.Text;
-			tempReminder.ReminderTime = reminder.ReminderTime;
-
-			tempReminder.Tags.Clear();
-			if (reminder.Tags != null)
-			{
-				foreach (var tag in reminder.Tags)
+				var tempReminder = await _context.Reminders.Include(n => n.Tags).FirstOrDefaultAsync(a => a.Id == id);
+				if (tempReminder == null)
 				{
-					var existingTag = await _context.Tags.FindAsync(tag.Id);
-					if (existingTag != null)
+					return 0;
+				}
+
+				tempReminder.Title = reminder.Title;
+				tempReminder.Text = reminder.Text;
+				tempReminder.ReminderTime = reminder.ReminderTime;
+
+				tempReminder.Tags.Clear();
+				if (reminder.Tags != null)
+				{
+					foreach (var tag in reminder.Tags)
 					{
-						tempReminder.Tags.Add(existingTag);
-					}
-					else
-					{
-						var newTag = new Tag
+						var existingTag = await _context.Tags.FindAsync(tag.Id);
+						if (existingTag != null)
 						{
-							Name = tag.Name
-						};
-						tempReminder.Tags.Add(newTag);
+							tempReminder.Tags.Add(existingTag);
+						}
+						else
+						{
+							var newTag = new Tag
+							{
+								Name = tag.Name
+							};
+							tempReminder.Tags.Add(newTag);
+						}
 					}
 				}
+
+				return await _context.SaveChangesAsync();
 			}
-
-			return await _context.SaveChangesAsync();
-
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
+
 	}
 }

@@ -6,6 +6,7 @@ namespace Note.API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[ServiceFilter(typeof(CustomExceptionFilter))]
 	public abstract class ApiControllerBase : ControllerBase
 	{
 		private ISender _sender;

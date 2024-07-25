@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Note.Application.Notes.Commands.CreateNote;
-using Note.Application.Notes.Commands.CreateTag;
 using Note.Application.Notes.Commands.DeleteNote;
 using Note.Application.Notes.Commands.UpdateNote;
 using Note.Application.Notes.Queries.GetNoteById;
@@ -25,47 +22,83 @@ namespace Note.API.Controllers
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(CreateNoteCommand command)
 		{
-			var createdNote = await Sender.Send(command);
-			return CreatedAtAction(nameof(GetNoteById), new { id = createdNote.Id }, createdNote);
+			try
+			{
+				var createdNote = await _sender.Send(command);
+				return CreatedAtAction(nameof(GetNoteById), new { id = createdNote.Id }, createdNote);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while creating the note: {ex.Message}", ex);
+			}
 		}
+
 		[HttpDelete("Delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await _sender.Send(new DeleteNoteCommand { Id = id });
-			return NoContent();
+			try
+			{
+				await _sender.Send(new DeleteNoteCommand { Id = id });
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while deleting the note: {ex.Message}", ex);
+			}
 		}
 
 		[HttpGet("GetById")]
 		public async Task<IActionResult> GetNoteById(int id)
 		{
-			var note = await Sender.Send(new GetNoteByIdQuery() { NoteId = id });
-			if (note != null)
+			try
 			{
-				return Ok(note);
+				var note = await _sender.Send(new GetNoteByIdQuery { NoteId = id });
+				if (note != null)
+				{
+					return Ok(note);
+				}
+				else
+				{
+					return NotFound();
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				return NotFound();
+				throw new Exception($"An error occurred while retrieving the note: {ex.Message}", ex);
 			}
 		}
+
 		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAllAsync()
 		{
-			var notes = await _sender.Send(new GetNoteQuery());
-			return Ok(notes);
+			try
+			{
+				var notes = await _sender.Send(new GetNoteQuery());
+				return Ok(notes);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while retrieving the notes: {ex.Message}", ex);
+			}
 		}
-		[HttpPut("{UpdateById}")]
+
+		[HttpPut("UpdateById")]
 		public async Task<IActionResult> Update(int id, UpdateNoteCommand command)
 		{
-			if (id != command.Id)
+			try
 			{
-				return BadRequest();
+				if (id != command.Id)
+				{
+					return BadRequest();
+				}
+				await _sender.Send(command);
+				return NoContent();
 			}
-			await Sender.Send(command);
-			return NoContent();
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred while updating the note: {ex.Message}", ex);
+			}
 		}
-
-
-
 	}
 }
+

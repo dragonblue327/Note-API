@@ -18,18 +18,26 @@ namespace Note.Application.Notes.Commands.UpdateReminder
 		{
 			this._reminderRepository = reminderRepository;
 		}
+
 		public async Task<int> Handle(UpdateReminderCommand request, CancellationToken cancellationToken)
 		{
-			var updateReminderEntity = new Reminder
+			try
 			{
-				Id = request.Id,
-				Title = request.Title,
-				Text = request.Text,
-				Tags = request.Tags ?? null,
-				ReminderTime = request.ReminderTime,
-			};
-			return await _reminderRepository.UpdateAsync(request.Id, updateReminderEntity);
-	
+				var updateReminderEntity = new Reminder
+				{
+					Id = request.Id,
+					Title = request.Title,
+					Text = request.Text,
+					Tags = request.Tags ?? null,
+					ReminderTime = request.ReminderTime,
+				};
+				return await _reminderRepository.UpdateAsync(request.Id, updateReminderEntity);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

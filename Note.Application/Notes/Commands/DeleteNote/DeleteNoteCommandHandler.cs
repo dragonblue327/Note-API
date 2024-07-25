@@ -16,9 +16,17 @@ namespace Note.Application.Notes.Commands.DeleteNote
 		{
 			this._noteRepository = noteRepository;
 		}
+
 		public async Task<int> Handle(DeleteNoteCommand request, CancellationToken cancellationToken)
 		{
-			return await _noteRepository.DeleteAsync(request.Id);
+			try
+			{
+				return await _noteRepository.DeleteAsync(request.Id);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }

@@ -21,11 +21,19 @@ namespace Note.Application.Notes.Queries.GetReminderById
 			this._reminderRepository = reminderRepository;
 			this._mapper = mapper;
 		}
+
 		public async Task<ReminderVm> Handle(GetReminderByIdQuery request, CancellationToken cancellationToken)
 		{
-			var note = await _reminderRepository.GetByIdAsync(request.ReminderId);
-			return _mapper.Map<ReminderVm>(note);
-
+			try
+			{
+				var note = await _reminderRepository.GetByIdAsync(request.ReminderId);
+				return _mapper.Map<ReminderVm>(note);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

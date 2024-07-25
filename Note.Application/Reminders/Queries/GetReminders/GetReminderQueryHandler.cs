@@ -2,12 +2,6 @@
 using MediatR;
 using Note.Application.Notes.Queries.GetReminders;
 using Note.Domain.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Note.Application.Notes.Queries.GetReminder
 {
@@ -21,11 +15,20 @@ namespace Note.Application.Notes.Queries.GetReminder
 			this._reminderRepository = reminderRepository;
 			this._mapper = mapper;
 		}
+
 		public async Task<List<ReminderVm>> Handle(GetReminderQuery request, CancellationToken cancellationToken)
 		{
-			var reminders = await _reminderRepository.GetAllNotesAsync();
-			var reminderList = _mapper.Map<List<ReminderVm>>(reminders);
-			return reminderList;
+			try
+			{
+				var reminders = await _reminderRepository.GetAllNotesAsync();
+				var reminderList = _mapper.Map<List<ReminderVm>>(reminders);
+				return reminderList;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

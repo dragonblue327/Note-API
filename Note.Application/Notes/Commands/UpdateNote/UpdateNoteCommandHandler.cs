@@ -18,17 +18,25 @@ namespace Note.Application.Notes.Commands.UpdateNote
 		{
 			this._noteRepository = noteRepository;
 		}
+
 		public async Task<int> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
 		{
-			var updateNoteEntity = new Domain.Entity.Note()
+			try
 			{
-				Id = request.Id,
-				Title = request.Title,
-				Text = request.Text,
-				Tags = request.Tags ?? new List<Tag>(),
-			};
-			return await _noteRepository.UpdateAsync(request.Id, updateNoteEntity);
-	
+				var updateNoteEntity = new Domain.Entity.Note()
+				{
+					Id = request.Id,
+					Title = request.Title,
+					Text = request.Text,
+					Tags = request.Tags ?? new List<Tag>(),
+				};
+				return await _noteRepository.UpdateAsync(request.Id, updateNoteEntity);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
+

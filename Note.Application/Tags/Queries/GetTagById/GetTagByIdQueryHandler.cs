@@ -22,8 +22,15 @@ namespace Note.Application.Notes.Queries.GetTagById
 		}
 		public async Task<TagVm> Handle(GetTagByIdQuery request, CancellationToken cancellationToken)
 		{
-			var note = await _tagRepository.GetByIdAsync(request.TagId);
-			return _mapper.Map<TagVm>(note);
+			try
+			{
+				var note = await _tagRepository.GetByIdAsync(request.TagId);
+				return _mapper.Map<TagVm>(note);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 
 		}
 	}

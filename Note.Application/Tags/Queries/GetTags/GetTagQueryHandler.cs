@@ -15,16 +15,23 @@ namespace Note.Application.Notes.Queries.GetTags
 		private readonly ITagRepository _TagRepository;
 		private readonly IMapper _mapper;
 
-		public GetTagQueryHandler(ITagRepository TagRepository , IMapper mapper)
+		public GetTagQueryHandler(ITagRepository TagRepository, IMapper mapper)
 		{
 			this._TagRepository = TagRepository;
 			this._mapper = mapper;
 		}
 		public async Task<List<TagVm>> Handle(GetTagQuery request, CancellationToken cancellationToken)
 		{
-			var Tags = await _TagRepository.GetAllTagsAsync();
-			var TagList = _mapper.Map<List<TagVm>>(Tags);
-			return TagList;
+			try
+			{
+				var Tags = await _TagRepository.GetAllTagsAsync();
+				var TagList = _mapper.Map<List<TagVm>>(Tags);
+				return TagList;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"An error occurred: {ex.Message}", ex);
+			}
 		}
 	}
 }
