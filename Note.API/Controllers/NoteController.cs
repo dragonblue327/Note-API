@@ -6,7 +6,6 @@ using Note.Application.Notes.Commands.DeleteNote;
 using Note.Application.Notes.Commands.UpdateNote;
 using Note.Application.Notes.Queries.GetNoteById;
 using Note.Application.Notes.Queries.GetNotes;
-using Note.Domain.Entity;
 
 namespace Note.API.Controllers
 {

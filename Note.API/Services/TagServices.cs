@@ -5,92 +5,45 @@ namespace Note.API.Services;
 
 public class TagService
 {
-	public static List<TagDto> ConvertTempDataToTags(List<TagVm> tempData)
-	{
-		List<TagDto> tags = new List<TagDto>();
-
-		foreach (var temp in tempData)
-		{
-			
-				var tempTag = new TagDto
+	public static List<TagDto> ConvertTempDataToTags(List<TagVm> tempData) =>
+				tempData.Select(temp => new TagDto
 				{
 					Id = temp.Id,
 					Name = temp.Name,
-					Notes= new List<NoteDto>(),
-					Reminders= new List<ReminderDto>(),
-				};
-			if (temp.Notes != null)
-			{
-				foreach (var note in temp.Notes!)
-				{
-					var tempNote = new NoteDto
+					Notes = temp.Notes?.Select(note => new NoteDto
 					{
 						Id = note.Id,
 						Text = note.Text,
 						Title = note.Title
-					};
-					tempTag.Notes.Add(tempNote);
-				}
-			}
-			if (temp.Reminders != null)
-			{
-				foreach (var reminder in temp.Reminders!)
-				{
-					var tempReminder = new ReminderDto
+					}).ToList() ?? new List<NoteDto>(),
+					Reminders = temp.Reminders?.Select(reminder => new ReminderDto
 					{
 						Id = reminder.Id,
 						Title = reminder.Title,
 						Text = reminder.Text,
 						ReminderTime = reminder.ReminderTime
-					};
-					tempTag.Reminders!.Add(tempReminder);
-				}
-			}
-			tags.Add(tempTag);
-		}
+					}).ToList() ?? new List<ReminderDto>()
+				}).ToList();
 
-		return tags;
-	}
-	public static TagDto ConvertTempDataToTag(TagVm tempData)
-	{
-		var tempTag = new TagDto
-		{
-			Id = tempData.Id,
-			Name = tempData.Name,
-			Notes = new List<NoteDto>(),
-			Reminders = new List<ReminderDto>()
-		};
-
-		if (tempData.Notes != null)
-		{
-			foreach (var note in tempData.Notes!)
+	public static TagDto ConvertTempDataToTag(TagVm tempData) =>
+			new TagDto
 			{
-				var tempNote = new NoteDto
+				Id = tempData.Id,
+				Name = tempData.Name,
+				Notes = tempData.Notes?.Select(note => new NoteDto
 				{
 					Id = note.Id,
 					Text = note.Text,
 					Title = note.Title
-				};
-				tempTag.Notes.Add(tempNote);
-			}
-		}
-
-		if (tempData.Reminders != null)
-		{
-			foreach (var reminder in tempData.Reminders!)
-			{
-				var tempReminder = new ReminderDto
+				}).ToList() ?? new List<NoteDto>(),
+				Reminders = tempData.Reminders?.Select(reminder => new ReminderDto
 				{
 					Id = reminder.Id,
 					Title = reminder.Title,
 					Text = reminder.Text,
 					ReminderTime = reminder.ReminderTime
-				};
-				tempTag.Reminders!.Add(tempReminder);
-			}
-		}
+				}).ToList() ?? new List<ReminderDto>()
+			};
 
-		return tempTag;
-	}
 
 }

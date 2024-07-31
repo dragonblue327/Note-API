@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using Note.Application.Notes.Commands.UpdateNote;
 
 namespace Note.Application.Notes.Commands.CreateNote
 {
-	public class CreateNoteCommandValidator : AbstractValidator<CreateNoteCommand>
+	public class UpdateNoteCommandValidator : AbstractValidator<UpdateNoteCommand>
 	{
-		public CreateNoteCommandValidator()
+		public UpdateNoteCommandValidator()
 		{
 			RuleFor(a => a.Title).NotEmpty().WithMessage("Name is required")
 			 .MaximumLength(50).WithMessage("Name should not exceed 50 characters").MinimumLength(3).WithMessage("Name should be more than 3 characters");

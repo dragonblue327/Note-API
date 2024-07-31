@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Note.Application.Notes.Commands.CreateNote
 {
-	public class CreateReminderCommandHandler : IRequestHandler<CreateNoteCommand, NoteVm>
+	public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, NoteVm>
 	{
 		private readonly INoteRepository _noteRepository;
 		private readonly IMapper _mapper;
 
-		public CreateReminderCommandHandler(INoteRepository noteRepository, IMapper mapper)
+		public CreateNoteCommandHandler(INoteRepository noteRepository, IMapper mapper)
 		{
 			this._noteRepository = noteRepository;
 			this._mapper = mapper;

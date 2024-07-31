@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Note.Application.Notes.Queries.GetTags;
 using Note.Domain.Entity;
+using System.Text.Json.Serialization;
 
 namespace Note.Application.Notes.Commands.CreateTag
 {

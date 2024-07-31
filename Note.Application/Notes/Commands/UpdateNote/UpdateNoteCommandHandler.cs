@@ -19,7 +19,7 @@ namespace Note.Application.Notes.Commands.UpdateNote
 		public UpdateNoteCommandHandler(INoteRepository noteRepository, IMapper mapper)
 		{
 			this._noteRepository = noteRepository;
-			_mapper = mapper;
+			this._mapper = mapper;
 		}
 
 		public async Task<NoteVm> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
