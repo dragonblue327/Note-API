@@ -2,15 +2,15 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Note.Domain.Entity
+namespace Note.API.Entity
 {
-	public class Reminder
+	public class ReminderDto
 	{
 		public int Id { get; set; }
 		public string Title { get; set; } = string.Empty;
 		public string Text { get; set; } = string.Empty;
 		public DateTime ReminderTime { get; set; } = DateTime.UtcNow;
-		public List<Tag>? Tags { get; set; }
+		public List<TagDto>? Tags { get; set; }
 	}
 
 }

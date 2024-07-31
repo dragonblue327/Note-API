@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Note.Application.Common.Exceptions;
 using Note.Application.Notes.Queries.GetTags;
 using Note.Domain.Repository;
 
@@ -22,9 +23,9 @@ namespace Note.Application.Notes.Queries.GetTagById
 				var note = await _tagRepository.GetByIdAsync(request.TagId);
 				return _mapper.Map<TagVm>(note);
 			}
-			catch (Exception ex)
+			catch (NotFoundEntityException ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new NotFoundEntityException($"An error occurred: {ex.Message}", ex);
 			}
 
 		}

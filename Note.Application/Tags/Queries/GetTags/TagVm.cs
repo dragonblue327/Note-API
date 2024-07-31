@@ -14,7 +14,7 @@ namespace Note.Application.Notes.Queries.GetTags
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } = string.Empty;
-		public List<Domain.Entity.Note>? Notes { get; set; } = new List<Domain.Entity.Note>();
-		public List<Reminder>? Reminders { get; set; } = new List<Reminder>();
+		public List<Domain.Entity.Note>? Notes { get; set; }
+		public List<Reminder>? Reminders { get; set; } 
 	}
 }

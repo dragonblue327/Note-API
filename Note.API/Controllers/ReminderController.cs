@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Note.API.Services;
 using Note.Application.Notes.Commands.CreateReminder;
 using Note.Application.Notes.Commands.DeleteReminder;
 using Note.Application.Notes.Commands.UpdateReminder;
@@ -52,7 +53,7 @@ namespace Note.API.Controllers
 		{
 			try
 			{
-				var reminder = await _sender.Send(new GetReminderByIdQuery { ReminderId = id });
+				var reminder = ReminderService.ConvertTempDataToReminder(await _sender.Send(new GetReminderByIdQuery { ReminderId = id }));
 				if (reminder != null)
 				{
 					return Ok(reminder);
@@ -74,7 +75,8 @@ namespace Note.API.Controllers
 			try
 			{
 				var reminders = await _sender.Send(new GetReminderQuery());
-				return Ok(reminders);
+				var result = ReminderService.ConvertTempDataToReminders(reminders);
+				return Ok(result);
 			}
 			catch (Exception ex)
 			{
@@ -91,7 +93,7 @@ namespace Note.API.Controllers
 				{
 					return BadRequest();
 				}
-				var result = await _sender.Send(command);
+				var result =ReminderService.ConvertTempDataToReminder(await _sender.Send(command));
 				return Ok(result);
 			}
 			catch (Exception ex)

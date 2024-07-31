@@ -30,7 +30,7 @@ namespace Note.Application.Notes.Commands.CreateNote
 				{
 					Title = request.Title,
 					Text = request.Text,
-					Tags = request.Tags ?? new List<Tag>(),
+					Tags = request.Tags ?? new List<Tag>()
 				};
 				var result = await _noteRepository.CreateAsync(noteEntity);
 				return _mapper.Map<NoteVm>(result);

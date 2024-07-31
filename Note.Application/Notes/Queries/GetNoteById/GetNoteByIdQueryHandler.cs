@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Note.Application.Common.Exceptions;
 using Note.Application.Notes.Queries.GetNotes;
 using Note.Domain.Repository;
 
@@ -23,9 +24,9 @@ namespace Note.Application.Notes.Queries.GetNoteById
 				var note = await _noteRepository.GetByIdAsync(request.NoteId);
 				return _mapper.Map<NoteVm>(note);
 			}
-			catch (Exception ex)
+			catch (NotFoundEntityException ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new NotFoundEntityException($"An error occurred: {ex.Message}", ex);
 			}
 		}
 	}

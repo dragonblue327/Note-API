@@ -12,8 +12,8 @@ using Note.Infrastructure.Data;
 namespace Note.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240724202505_example")]
-    partial class example
+    [Migration("20240731123405_NoteApp")]
+    partial class NoteApp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

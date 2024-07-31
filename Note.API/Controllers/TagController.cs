@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Note.API.Services;
 using Note.Application.Notes.Commands.CreateTag;
 using Note.Application.Notes.Commands.DeleteTag;
 using Note.Application.Notes.Commands.UpdateTag;
@@ -52,7 +53,7 @@ namespace Note.API.Controllers
 		{
 			try
 			{
-				var tag = await _sender.Send(new GetTagByIdQuery { TagId = id });
+				var tag = TagService.ConvertTempDataToTag( await _sender.Send(new GetTagByIdQuery { TagId = id }));
 				if (tag != null)
 				{
 					return Ok(tag);
@@ -74,7 +75,8 @@ namespace Note.API.Controllers
 			try
 			{
 				var tags = await _sender.Send(new GetTagQuery());
-				return Ok(tags);
+				var result = TagService.ConvertTempDataToTags(tags);
+				return Ok(result);
 			}
 			catch (Exception ex)
 			{
@@ -90,7 +92,7 @@ namespace Note.API.Controllers
 				{
 					return BadRequest();
 				}
-				var tag = await _sender.Send(command);
+				var tag = TagService.ConvertTempDataToTag( await _sender.Send(command));
 				return Ok(tag);
 			}
 			catch (Exception ex)

@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Note.Application.Notes.Queries.GetNotes;
 using Note.Domain.Entity;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 
 namespace Note.Application.Notes.Commands.UpdateNote

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Note.Application.Common.Exceptions;
 using Note.Application.Notes.Queries.GetNotes;
 using Note.Application.Notes.Queries.GetReminders;
 using Note.Domain.Repository;
@@ -29,9 +30,9 @@ namespace Note.Application.Notes.Queries.GetReminderById
 				var note = await _reminderRepository.GetByIdAsync(request.ReminderId);
 				return _mapper.Map<ReminderVm>(note);
 			}
-			catch (Exception ex)
+			catch (NotFoundEntityException ex)
 			{
-				throw new Exception($"An error occurred: {ex.Message}", ex);
+				throw new NotFoundEntityException($"An error occurred: {ex.Message}", ex);
 			}
 		}
 	}

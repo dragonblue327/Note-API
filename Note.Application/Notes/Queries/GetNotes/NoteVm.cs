@@ -7,11 +7,10 @@ namespace Note.Application.Notes.Queries.GetNotes
 {
 	public class NoteVm : IMapForm<Domain.Entity.Note>
 	{
-
 		public int Id { get; set; }
 		public string Title { get; set; } = string.Empty;
 		public string Text { get; set; } = string.Empty;
 
-		public List<Tag>? Tags { get; set; } = new List<Tag>();
+		public List<Tag>? Tags { get; set; } 
 	}
 }

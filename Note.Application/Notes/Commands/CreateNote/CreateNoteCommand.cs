@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Note.Application.Notes.Queries.GetNotes;
+using Note.Application.Notes.Queries.GetTags;
 using Note.Domain.Entity;
 
 namespace Note.Application.Notes.Commands.CreateNote
