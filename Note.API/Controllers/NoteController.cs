@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Note.API.Services;
 using Note.Application.Notes.Commands.CreateNote;
 using Note.Application.Notes.Commands.DeleteNote;
 using Note.Application.Notes.Commands.UpdateNote;
@@ -53,7 +52,7 @@ namespace Note.API.Controllers
 		{
 			try
 			{
-				var note = NoteServices.ConvertTempDataToNote(await _sender.Send(new GetNoteByIdQuery { NoteId = id }));
+				var note = await _sender.Send(new GetNoteByIdQuery { NoteId = id });
 				if (note != null)
 				{
 					return Ok(note);
@@ -75,8 +74,7 @@ namespace Note.API.Controllers
 			try
 			{
 				var notes = await _sender.Send(new GetNoteQuery());
-				var result = NoteServices.ConvertTempDataToNotes(notes);
-				return Ok(result);
+				return Ok(notes);
 			}
 			catch (Exception ex)
 			{
@@ -93,7 +91,7 @@ namespace Note.API.Controllers
 				{
 					return BadRequest();
 				}
-				var result =  NoteServices.ConvertTempDataToNote( await _sender.Send(command));
+				var result =  await _sender.Send(command);
 
 				return Ok(result);
 			}
