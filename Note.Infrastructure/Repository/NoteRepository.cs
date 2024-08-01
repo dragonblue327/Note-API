@@ -2,11 +2,13 @@
 using Note.Domain.Entity;
 using Note.Domain.Repository;
 using Note.Infrastructure.Data;
+using Logs.Info;
 
 namespace Note.Infrastructure.Repository
 {
 	public class NoteRepository : INoteRepository
 	{
+		private static MemoryLogger _logger =  MemoryLogger.GetLogger;
 		private readonly AppDBContext _context;
 
 		public NoteRepository(AppDBContext appDBContext)
@@ -23,14 +25,17 @@ namespace Note.Infrastructure.Repository
 				}
 				await _context.Notes.AddAsync(note);
 				await _context.SaveChangesAsync();
+				_logger.LogInfo($"Item type note with id : ( {note.Id} ) created");
 				return note;
 			}
 			catch (DbUpdateException ex)
 			{
+				_logger.LogError(ex.Message);
 				throw new Exception("An error occurred while updating the database.", ex);
 			}
 			catch (Exception ex)
 			{
+				_logger.LogWarning(ex.Message);
 				throw new Exception("An error occurred while creating the note.", ex);
 			}
 
@@ -47,14 +52,17 @@ namespace Note.Infrastructure.Repository
 				}
 
 				_context.Notes.Remove(note);
+				_logger.LogInfo($"Item type note with id : ( {id} ) deleted");
 				return await _context.SaveChangesAsync();
 			}
 			catch (DbUpdateException ex)
 			{
+				_logger.LogError(ex.Message);
 				throw new Exception("An error occurred while updating the database.", ex);
 			}
 			catch (Exception ex)
 			{
+				_logger.LogWarning(ex.Message);
 				throw new Exception("An error occurred while deleting the note.", ex);
 			}
 
@@ -68,10 +76,12 @@ namespace Note.Infrastructure.Repository
 			}
 			catch (DbUpdateException ex)
 			{
+				_logger.LogError(ex.Message);
 				throw new Exception("An error occurred while retrieving the notes from the database.", ex);
 			}
 			catch (Exception ex)
 			{
+				_logger.LogWarning(ex.Message);
 				throw new Exception("An error occurred while retrieving the notes.", ex);
 			}
 
@@ -89,10 +99,12 @@ namespace Note.Infrastructure.Repository
 			}
 			catch (DbUpdateException ex)
 			{
+				_logger.LogError(ex.Message);
 				throw new Exception("An error occurred while retrieving the note from the database.", ex);
 			}
 			catch (Exception ex)
 			{
+				_logger.LogWarning(ex.Message);
 				throw new Exception("An error occurred while retrieving the note.", ex);
 			}
 
@@ -137,17 +149,19 @@ namespace Note.Infrastructure.Repository
 						}
 					}
 				}
-
+				_logger.LogInfo($"Item type note with id : ( {id} ) changed");
 				_context.Update(existingNote);
 				await _context.SaveChangesAsync();
 				return existingNote;
 			}
 			catch (DbUpdateException ex)
 			{
+				_logger.LogError(ex.Message);
 				throw new Exception("An error occurred while updating the database.", ex);
 			}
 			catch (Exception ex)
 			{
+				_logger.LogWarning(ex.Message);
 				throw new Exception("An error occurred while updating the note.", ex);
 			}
 		}

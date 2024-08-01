@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Logs.Info\Logs.Info.csproj" />
     <ProjectReference Include="..\Note.Application\Note.Application.csproj" />
   </ItemGroup>
 

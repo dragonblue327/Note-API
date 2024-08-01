@@ -10,6 +10,7 @@ namespace Note.Domain.Entity
 		public string Title { get; set; } = string.Empty;
 		public string Text { get; set; } = string.Empty;
 		public DateTime ReminderTime { get; set; } = DateTime.UtcNow;
+		[JsonIgnore]
 		public List<Tag>? Tags { get; set; }
 	}
 

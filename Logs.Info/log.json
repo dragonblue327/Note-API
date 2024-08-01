@@ -1,0 +1,20 @@
+[]{
+  "Message": "Deleted norm",
+  "LogType": 0,
+  "CreatedAt": "2024-08-01T11:28:34.6961359+03:00"
+}
+{
+  "Message": "Item type note with id : ( 6 ) created",
+  "LogType": 0,
+  "CreatedAt": "2024-08-01T11:43:39.1103097+03:00"
+}
+{
+  "Message": "Item type note with id : ( 6 ) changed",
+  "LogType": 0,
+  "CreatedAt": "2024-08-01T11:44:21.4538127+03:00"
+}
+{
+  "Message": "Item type reminder with id : ( 1 ) changed",
+  "LogType": 0,
+  "CreatedAt": "2024-08-01T11:46:28.9244423+03:00"
+}

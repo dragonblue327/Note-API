@@ -13,8 +13,9 @@ namespace Note.Domain.Entity
 	public class Note
 	{
 		public int Id { get; set; }
-		public string Title { get; set; } = "";
-		public string Text { get; set; } = "";
+		public string Title { get; set; } = string.Empty;
+		public string Text { get; set; } = string.Empty;
+		[JsonIgnore]
 		public ICollection<Tag>? Tags { get; set; } 
 	}
 

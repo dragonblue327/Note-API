@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestNoteProjcet", "..\TestN
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Note.Infrastructure", "..\Note.Infrastructure\Note.Infrastructure.csproj", "{4340ECA8-C890-4A2E-A9E9-CD5C4CF2C636}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logs.Info", "..\Logs.Info\Logs.Info.csproj", "{A824F12B-D850-43F9-B83D-4DD3909F8D8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4340ECA8-C890-4A2E-A9E9-CD5C4CF2C636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4340ECA8-C890-4A2E-A9E9-CD5C4CF2C636}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4340ECA8-C890-4A2E-A9E9-CD5C4CF2C636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A824F12B-D850-43F9-B83D-4DD3909F8D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A824F12B-D850-43F9-B83D-4DD3909F8D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A824F12B-D850-43F9-B83D-4DD3909F8D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A824F12B-D850-43F9-B83D-4DD3909F8D8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
